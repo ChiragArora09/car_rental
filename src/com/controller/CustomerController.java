@@ -1,10 +1,16 @@
 package com.controller;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
+
+import com.model.Vehicle;
+import com.service.CustomerService;
 
 public class CustomerController {
 
 	public static void main(String[] args) {
+		CustomerService customerService = new CustomerService();
 		Scanner sc = new Scanner(System.in);
 		
 		while(true) {
@@ -25,7 +31,14 @@ public class CustomerController {
 			switch(input) {
 			
 			case 1:
-				System.out.println();
+				try {
+					List<Vehicle> vehicles = customerService.getAllCars();
+					for(Vehicle v : vehicles){
+						System.out.println(v);
+					}
+				} catch(SQLException e) {
+					System.out.println(e.getMessage());
+				}
 				break;
 			
 			case 2:

@@ -45,5 +45,28 @@ public class UserDaolmpl implements UserDao {
 		DBConnection.dbClose();
 		return user_id;
 	}	
+	
+	@Override
+	public User login(String username, String password) throws SQLException {
+		Connection con = DBConnection.dbConnect();
+		String sql="select * from user where user_name=? AND password=?";
+		//prepare the statement 
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, username);
+		pstmt.setString(2, password);
+		ResultSet rst  = pstmt.executeQuery();
+		User userObj= new User();
+		while(rst.next()) {
+			String role=rst.getString("role");
+			userObj.setRole(role);
+			int id= rst.getInt("id");
+			userObj.setId(id);
+		    String mail =rst.getString("email_address");
+		    userObj.setEmail_address(mail);
+		
+		}
+		return userObj;
+		 
+	}
 
 }

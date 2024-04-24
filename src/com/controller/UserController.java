@@ -3,6 +3,7 @@ package com.controller;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import com.exception.InvalidCredentialsException;
 import com.model.Customer;
 import com.model.User;
 import com.model.Vendor;
@@ -108,9 +109,31 @@ public class UserController {
 				}
 				break;
 				
-			case 2:
-				
-				break;
+			case 2: // FOR LOGIN
+                try {
+					System.out.println("Enter username");
+					sc.nextLine();
+					String username = sc.nextLine();
+					System.out.println("Enter password");
+					String loginPassword = sc.nextLine();
+					/* go to DB and check if this credentials are valid, if yes then return object*/
+					 
+					User userObj = userService.login(username,loginPassword);
+						if(userObj.getRole().equalsIgnoreCase("CUSTOMER")) {
+							System.out.println("Customer Menu");
+						}
+						else if(userObj.getRole().equalsIgnoreCase("VENDOR")) {
+							System.out.println("--------Vendor Menu--------");
+						}
+						else{
+							System.out.println("--------Hello Admin!---------");
+						}
+				} catch (SQLException e) {
+					 System.out.println(e.getMessage());
+				} catch (InvalidCredentialsException e) {
+					 System.out.println(e.getMessage());
+				}
+				break; 
 				
 			default: 
 				 System.out.println("Invalid input given, try again!!!");

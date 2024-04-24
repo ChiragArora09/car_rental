@@ -20,13 +20,13 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-//	public int getId() {
-//		return id;
-//	}
-//
-//	public void setId(int id) {
-//		this.id = id;
-//	}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getEmail_address() {
 		return email_address;
