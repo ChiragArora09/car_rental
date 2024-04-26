@@ -120,13 +120,14 @@ public class UserController {
 					 
 					User userObj = userService.login(username,loginPassword);
 						if(userObj.getRole().equalsIgnoreCase("CUSTOMER")) {
-							System.out.println("Customer Menu");
+							CustomerController.customerMenu(userObj.getId());
 						}
 						else if(userObj.getRole().equalsIgnoreCase("VENDOR")) {
 							System.out.println("--------Vendor Menu--------");
 						}
 						else{
-							System.out.println("--------Hello Admin!---------");
+							System.out.println("----------HELLO, ADMIN-------------");
+							AdminController.AdminMenu();
 						}
 				} catch (SQLException e) {
 					 System.out.println(e.getMessage());
@@ -137,7 +138,6 @@ public class UserController {
 				
 			default: 
 				 System.out.println("Invalid input given, try again!!!");
-				
 				
 			}
 			

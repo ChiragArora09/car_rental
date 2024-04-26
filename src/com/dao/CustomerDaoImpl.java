@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.model.Customer;
-import com.model.Vehicle;
 import com.utility.DBConnection;
 
 public class CustomerDaoImpl implements CustomerDao{
@@ -31,31 +30,85 @@ public class CustomerDaoImpl implements CustomerDao{
 		return status;
 	}
 
+	// finding customer by user id
 	@Override
-	public List<Vehicle> getAll() throws SQLException {
+	public Customer getCustomer(int id) throws SQLException {
 		Connection con = DBConnection.dbConnect();
-		String sql = "SELECT * from vehicle";
+		String sql = "SELECT * from customer WHERE user_id="+id;
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		ResultSet rst = pstmt.executeQuery();
-		List<Vehicle> list = new ArrayList<>();
+		
+		Customer c1 = new Customer();
+		if(rst.next()) {
+			c1.setId(rst.getInt("id"));
+			c1.setFirst_name(rst.getString("first_name"));
+			c1.setLast_name(rst.getString("last_name"));
+			c1.setCity(rst.getString("city"));
+			c1.setPhone_number(rst.getString("phone_number"));
+			c1.setUser_id(rst.getInt("user_id"));
+			c1.setDriving_license(rst.getString("driving_license"));
+		}
+		
+		DBConnection.dbClose();
+		return c1;
+	}
+
+	@Override
+	public List<Customer> getAllCustomers() throws SQLException {
+		Connection con = DBConnection.dbConnect();
+		String sql = "SELECT * from customer" ;
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		ResultSet rst = pstmt.executeQuery();
+		List<Customer> list = new ArrayList<>();
 		while(rst.next()) {
 			int id = rst.getInt("id");
-			String vehicle_name = rst.getString("vehicle_name");
-			String vehicle_model = rst.getString("vehicle_model");
-			String vehicle_year = rst.getString("vehicle_year");
-			float daily_rate = rst.getFloat("daily_rate");
-			int availability_status = rst.getInt("availability_status");			
-			int passenger_capacity = rst.getInt("passenger_capacity");
-			String engine_capacity = rst.getString("engine_capacity");
-			int vendor_id = rst.getInt("vendor_id");
+			String first_name = rst.getString("first_name");
+			String last_name = rst.getString("last_name");
+			String phone_number = rst.getString("phone_number");
+			String city = rst.getString("city");
+			int user_id = rst.getInt("user_id");
+			String driving_license = rst.getString("driving_license");
 			
-			Vehicle v1 = new Vehicle(id, vehicle_name, vehicle_model, vehicle_year, daily_rate, availability_status, passenger_capacity, engine_capacity, vendor_id);
-			list.add(v1);
+			Customer c1 = new Customer(id, first_name, last_name, phone_number, city, user_id, driving_license);
+			list.add(c1);
 		}
 		
 		DBConnection.dbClose();
 		
 		return list;
+	}
+
+	@Override
+	public Customer particularCustomer(int id) throws SQLException {
+		Connection con = DBConnection.dbConnect();
+		String sql = "SELECT * from customer WHERE id="+id;
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		ResultSet rst = pstmt.executeQuery();
+		
+		Customer c1 = new Customer();
+		if(rst.next()) {
+			c1.setId(rst.getInt("id"));
+			c1.setFirst_name(rst.getString("first_name"));
+			c1.setLast_name(rst.getString("last_name"));
+			c1.setCity(rst.getString("city"));
+			c1.setPhone_number(rst.getString("phone_number"));
+			c1.setUser_id(rst.getInt("user_id"));
+			c1.setDriving_license(rst.getString("driving_license"));
+		}
+		
+		DBConnection.dbClose();
+		return c1;
+	}
+
+	@Override
+	public int blacklistCustomer(int id) throws SQLException {
+		Connection con = DBConnection.dbConnect();
+		String sql = "UPDATE customer SET isBlacklisted=1 WHERE id=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, id);
+		int status = pstmt.executeUpdate();
+		DBConnection.dbClose();		
+		return status;
 	}
 
 }

@@ -8,5 +8,8 @@ import com.model.Vehicle;
 
 public interface CustomerDao {
 	int save(Customer customer) throws SQLException;
-	List<Vehicle> getAll() throws SQLException;
+	Customer getCustomer(int id) throws SQLException;
+	Customer particularCustomer(int id) throws SQLException;
+	List<Customer> getAllCustomers() throws SQLException;
+	int blacklistCustomer(int id) throws SQLException;
 }

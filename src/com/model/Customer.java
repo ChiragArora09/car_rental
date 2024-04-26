@@ -1,6 +1,7 @@
 package com.model;
 
 public class Customer {
+	private int id;
 	private String first_name;
 	private String last_name;
 	private String phone_number;
@@ -18,10 +19,34 @@ public class Customer {
 		this.user_id = user_id;
 		this.driving_license = driving_license;
 	}
+	
+
+	public Customer(int id, String first_name, String last_name, String phone_number, String city, int user_id, String driving_license) {
+		super();
+		this.id = id;
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.phone_number = phone_number;
+		this.city = city;
+		this.user_id = user_id;
+		this.driving_license = driving_license;
+	}
+
+
 
 	public Customer() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getFirst_name() {

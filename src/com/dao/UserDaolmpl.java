@@ -63,8 +63,8 @@ public class UserDaolmpl implements UserDao {
 			userObj.setId(id);
 		    String mail =rst.getString("email_address");
 		    userObj.setEmail_address(mail);
-		
 		}
+		DBConnection.dbClose();
 		return userObj;
 		 
 	}

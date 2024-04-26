@@ -45,7 +45,8 @@ public class VendorController {
 			}
 
 		}
-
+		
+		sc.close();
 	}
 
 }
