@@ -19,6 +19,7 @@ public class CustomerController {
 		LeaseService leaseService = new LeaseService();
 		Scanner sc = new Scanner(System.in);
 		
+		// CUSTOMER ID CAN BE USED FOR FUNCTIONS RATHER THAN MANUALLY FINDING CUSTOMER ID FROM TABLE
 		int customer_id=-1; // customer_id=-1 means no user is logged in
 		String name = null;
 		
@@ -44,8 +45,7 @@ public class CustomerController {
 			System.out.println("");
 			System.out.println("Press 1. All Cars");
 			System.out.println("Press 2. Book Car");
-			System.out.println("Press 3. My bookings");
-			System.out.println("Press 4. History");
+			System.out.println("Press 3. Dashboard");
 			System.out.println("Press 0. to Exit");
 			
 			int input = sc.nextInt(); // INPUT FROM USER
@@ -62,7 +62,7 @@ public class CustomerController {
 					List<Vehicle> vehicles = vehicleService.getAllCars();
 					System.out.println("VEHICLE_NAME  VEHICLE_MODEL  DAILY_RATE  PASSENGER_CAPACITY  ENGINE_CAPACITY  AVAILABILITY_STATUS");
 					for(Vehicle v : vehicles){
-						System.out.println(v.getVehicle_name() + " " + v.getVehicle_model() + " " + v.getDaily_rate() + " " + v.getPassenger_capacity() + " " + v.getEngine_capacity() + " " + v.getAvailability_status());
+						System.out.println(v.getVehicle_name() + " | " + v.getVehicle_model() + " | " + v.getDaily_rate() + " | " + v.getPassenger_capacity() + " | " + v.getEngine_capacity() + " | " + v.getAvailability_status());
 					}
 				} catch(SQLException e) {
 					System.out.println(e.getMessage());
@@ -75,7 +75,7 @@ public class CustomerController {
 					List<Vehicle> vehicles = vehicleService.getAvailableCars(); // calling the function
 					System.out.println("ID  VEHICLE_NAME  VEHICLE_MODEL  DAILY_RATE  PASSENGER_CAPACITY  ENGINE_CAPACITY");
 					for(Vehicle v : vehicles){
-						System.out.println(v.getId() + " " + v.getVehicle_name() + " " + v.getVehicle_model() + " " + v.getDaily_rate() + " " + v.getPassenger_capacity() + " " + v.getEngine_capacity());
+						System.out.println(v.getId() + " | " + v.getVehicle_name() + " | " + v.getVehicle_model() + " | " + v.getDaily_rate() + " | " + v.getPassenger_capacity() + " | " + v.getEngine_capacity());
 					}
 					
 					// Choosing a vehicle and booking it
@@ -109,11 +109,8 @@ public class CustomerController {
 				break;
 				
 			case 3:
-				
-				break;
-				
-			case 4:
-				
+				System.out.println("_______________________________ Dashboard ___________________________________");
+				CustomerHistoryController.CustomerMenu(customer_id);
 				break;
 				
 			default:

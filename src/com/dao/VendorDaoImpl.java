@@ -121,5 +121,26 @@ public class VendorDaoImpl implements VendorDao {
 		DBConnection.dbClose();
 		return list;
 	}
+
+	@Override
+	public Vendor getVendorByUserId(int id) throws SQLException {
+		Connection con = DBConnection.dbConnect();
+		String sql = "SELECT * from vendor WHERE user_id="+id;
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		ResultSet rst = pstmt.executeQuery();
+		
+		Vendor v1 = new Vendor();
+		if(rst.next()) {
+			v1.setId(rst.getInt("id"));
+			v1.setName(rst.getString("name"));
+			v1.setIdentity_proof(rst.getString("identity_proof"));
+			v1.setPhone_number(rst.getString("phone_number"));
+			v1.setUser_id(rst.getInt("user_id"));
+			v1.setCommission(rst.getDouble("commission"));
+		}
+		
+		DBConnection.dbClose();
+		return v1;
+	}
 	
 }

@@ -29,6 +29,20 @@ public class Vehicle {
 		this.engine_capacity = engine_capacity;
 		this.vendor_id = vendor_id;
 	}
+	
+
+	public Vehicle(String vehicle_name, String vehicle_model, String vehicle_year, float daily_rate,
+			int availability_status, int passenger_capacity, String engine_capacity, int vendor_id) {
+		super();
+		this.vehicle_name = vehicle_name;
+		this.vehicle_model = vehicle_model;
+		this.vehicle_year = vehicle_year;
+		this.daily_rate = daily_rate;
+		this.availability_status = availability_status;
+		this.passenger_capacity = passenger_capacity;
+		this.engine_capacity = engine_capacity;
+		this.vendor_id = vendor_id;
+	}
 
 	public int getId() {
 		return id;

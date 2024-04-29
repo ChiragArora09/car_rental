@@ -35,4 +35,8 @@ public class VendorService {
 	public List<VendorProfitDto> getProfits() throws SQLException {
 		return dao.getProfits();
 	}
+
+	public Vendor getVendor(int id) throws SQLException{
+		return dao.getVendorByUserId(id);
+	}
 }

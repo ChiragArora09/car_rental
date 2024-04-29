@@ -15,5 +15,6 @@ public interface VendorDao {
 	int blacklistVendor(int id) throws SQLException;
 	int changeCommission(int id, double c) throws SQLException;
 	List<VendorProfitDto> getProfits() throws SQLException;
+	Vendor getVendorByUserId(int id) throws SQLException;
 
 }

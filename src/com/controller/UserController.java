@@ -123,7 +123,7 @@ public class UserController {
 							CustomerController.customerMenu(userObj.getId());
 						}
 						else if(userObj.getRole().equalsIgnoreCase("VENDOR")) {
-							System.out.println("--------Vendor Menu--------");
+							VendorController.VendorMenu(userObj.getId());
 						}
 						else{
 							System.out.println("----------HELLO, ADMIN-------------");
