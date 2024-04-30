@@ -4,7 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+import com.dto.CustomerHistoryDto;
 import com.model.CustomerHistory;
+import com.model.Lease;
 import com.service.CustomerHistoryService;
 
 public class CustomerHistoryController {
@@ -21,7 +23,6 @@ public class CustomerHistoryController {
 		CustomerHistoryService customerHistoryService = new CustomerHistoryService();
 		Scanner sc = new Scanner(System.in);
 		while (true) {
-			System.out.println("--------Customer History--------");
 			System.out.println("Press 1: View Completed Deals");
 			System.out.println("Press 2: View Ongoing Deals");
 			System.out.println("Press 3: View Upcoming Deals");
@@ -34,20 +35,47 @@ public class CustomerHistoryController {
 			switch(input) {
 			case 1:
 				try {
-					List<CustomerHistory> customerHistorylist = customerHistoryService.findAll(cust_id);
-					for(CustomerHistory c:customerHistorylist) {
-						System.out.println(c.getCustomer_id());
+					List<CustomerHistoryDto> customerHistorylist = customerHistoryService.findAll(cust_id);
+					System.out.println("VEHICLE   AMOUNT   DISCOUNT   DAMAGED");
+					for(CustomerHistoryDto c:customerHistorylist) {
+						System.out.println(c.getVehicleName() + "  " + c.getFinalAmount() + "  " + c.getDiscount() + "  " + c.getDamageReported());
 					}
 				} catch (SQLException e) {
 					System.out.println(e.getMessage());
 				}
 				break;
-			}
 				
+			case 2:
+				try {
+					System.out.println("-------------Ongoiong Deals---------");
+					List<Lease> leaselist = customerHistoryService.GetOngoingDeals(cust_id);
+					for(Lease l:leaselist) {
+						System.out.println(l.getVehicle_id() + "  " + l.getStart_date() + "  " + l.getEnd_date() + "  " + l.getStatus()+ "  " + l.getType());
+					}
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}
+				
+				break;
+				
+			case 3:
+				try {
+					System.out.println("-------------Upcoming/Pending Deals---------");
+					List<Lease> leaselist = customerHistoryService.GetPendingDeals(cust_id);
+					System.out.println("Start-date   End-date   Status   Type");
+					for(Lease l:leaselist) {
+						System.out.println(l.getVehicle_id() + "  " + l.getStart_date() + "  " + l.getEnd_date() + "  " + l.getStatus()+ "  " + l.getType());
+					}
+					} catch (SQLException e) {
+						System.out.println(e.getMessage());
+					}
+					break;
+				
+				}
+				
+			}
+					
 		}
-
-
-	}
 
 	public static void CustomerMenu(int customer_id) {
 		int user_id = customer_id;

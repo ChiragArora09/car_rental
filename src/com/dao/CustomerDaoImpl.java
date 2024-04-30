@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dto.CustomerDetailsDto;
 import com.model.Customer;
 import com.utility.DBConnection;
 
@@ -109,6 +110,28 @@ public class CustomerDaoImpl implements CustomerDao{
 		int status = pstmt.executeUpdate();
 		DBConnection.dbClose();		
 		return status;
+	}
+
+	@Override
+	public List<CustomerDetailsDto> getDetailsForVendor(int vendorId) throws SQLException {
+		Connection con = DBConnection.dbConnect();
+		String sql = "select CONCAT(c.first_name,\" \",c.last_name) as customer, c.phone_number, c.driving_license, CONCAT(l.start_date,\" to \",l.last_date) as duration, v.vehicle_name, v.vehicle_model from lease l JOIN customer c ON l.customer_id=c.id JOIN vehicle v ON v.id=l.vehicle_id JOIN vendor vd ON vd.id=v.vendor_id where vd.id=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, vendorId);
+		ResultSet rst = pstmt.executeQuery();
+		List<CustomerDetailsDto> list = new ArrayList<>();
+		while(rst.next()) {
+			String customer = rst.getString("customer");
+			String phoneNumber = rst.getString("phone_number");
+			String drivingLicense = rst.getString("driving_license");
+			String duration = rst.getString("duration");
+			String vehicleName = rst.getString("vehicle_name");
+			
+			CustomerDetailsDto details = new CustomerDetailsDto(customer, phoneNumber, drivingLicense, duration, vehicleName);
+			list.add(details);
+		}
+		DBConnection.dbClose();
+		return list;
 	}
 
 }

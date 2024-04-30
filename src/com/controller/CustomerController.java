@@ -4,9 +4,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+import com.dto.VehicleLeaseDto;
 import com.model.Customer;
 import com.model.Lease;
 import com.model.Vehicle;
+import com.service.CustomerHistoryService;
 import com.service.CustomerService;
 import com.service.LeaseService;
 import com.service.VehicleService;
@@ -45,7 +47,8 @@ public class CustomerController {
 			System.out.println("");
 			System.out.println("Press 1. All Cars");
 			System.out.println("Press 2. Book Car");
-			System.out.println("Press 3. Dashboard");
+			System.out.println("Press 3. My Deals");
+			System.out.println("Press 4. Return vehicle");			
 			System.out.println("Press 0. to Exit");
 			
 			int input = sc.nextInt(); // INPUT FROM USER
@@ -109,8 +112,34 @@ public class CustomerController {
 				break;
 				
 			case 3:
-				System.out.println("_______________________________ Dashboard ___________________________________");
+				System.out.println("_______________________________ Deals ___________________________________");
+				System.out.println("");
 				CustomerHistoryController.CustomerMenu(customer_id);
+				break;
+				
+			case 4:
+				try {
+					// since we can only return vehicle that we already have we are going to print those cars from lease that have status ongoing and where end date<=current_date
+					List<VehicleLeaseDto> vehicleLeaseList = vehicleService.getMyLeasedCars(customer_id); // these are cars that user has taken on lease
+					for(VehicleLeaseDto v : vehicleLeaseList) {
+						System.out.println(v.getId() + "  |  " + v.getVehicleName());
+					}
+					if(vehicleLeaseList.size()>0) {
+						System.out.println("Which car would you like to return, enter the id");
+						int returnId = sc.nextInt();
+						
+						int status = vehicleService.returnVehicle(returnId);
+						if(status==1) {
+							System.out.println("Confirmed");
+						}
+					}else {
+						System.out.println("No vehicles to return");
+					}
+					
+				}catch(SQLException e) {
+					System.out.println(e.getMessage());
+				}
+				
 				break;
 				
 			default:

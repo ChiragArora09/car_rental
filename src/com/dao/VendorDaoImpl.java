@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dto.ParticularVendorDto;
+import com.dto.ReadyToReturnDto;
 import com.dto.VendorProfitDto;
 import com.model.Vendor;
 import com.utility.DBConnection;
@@ -141,6 +142,32 @@ public class VendorDaoImpl implements VendorDao {
 		
 		DBConnection.dbClose();
 		return v1;
+	}
+
+	@Override
+	public List<ReadyToReturnDto> getBackVehicle(int vendorId) throws SQLException {
+		Connection con = DBConnection.dbConnect();
+		String sql = "select l.id as deal_id, c.id as customer_id, CONCAT(c.first_name,\" \",c.last_name) as customer_name, c.phone_number, v.vehicle_name, v.id as vehicle_id, l.last_date from lease l JOIN vehicle v ON l.vehicle_id=v.id JOIN customer c ON l.customer_id=c.id WHERE status=\"ready to return\" AND v.vendor_id=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, vendorId);
+		ResultSet rst = pstmt.executeQuery();
+		
+		List<ReadyToReturnDto> list = new ArrayList<>();
+		
+		while(rst.next()) {
+			int dealId = rst.getInt("deal_id");
+			int customerId = rst.getInt("customer_id");
+			String customerName = rst.getString("customer_name");
+			String phoneNumber = rst.getString("phone_number");
+			String vehicleName = rst.getString("vehicle_name");
+			int vehicleId = rst.getInt("vehicle_id");
+			String lastDate = rst.getString("last_date");
+			
+			ReadyToReturnDto details = new ReadyToReturnDto(dealId, customerId, customerName, phoneNumber, vehicleName, vehicleId, lastDate);
+			list.add(details);
+		}
+		DBConnection.dbClose();
+		return list;
 	}
 	
 }

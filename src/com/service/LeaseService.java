@@ -7,6 +7,7 @@ import com.model.Lease;
 import com.dao.LeaseDao;
 import com.dao.LeaseDaoImpl;
 import com.dto.BookingDto;
+import com.dto.CustomerLeaseDto;
 
 public class LeaseService {
 	
@@ -18,6 +19,18 @@ public class LeaseService {
 	
 	public List<BookingDto> getAllBookings() throws SQLException {
 		return dao.getAllLeases();
+	}
+
+	public List<CustomerLeaseDto> getMyUpcomingDeals(int vendorId) throws SQLException {
+		return dao.getMyUpcomingDeals(vendorId);
+	}
+
+	public int deliverVehicle(int dealId) throws SQLException{
+		return dao.deliverVehicle(dealId);
+	}
+
+	public int leaseCompleted(int dealId) throws SQLException {
+		return dao.leaseCompleted(dealId);
 	}
 
 }

@@ -7,6 +7,8 @@ import com.model.Vehicle;
 import com.dao.VehicleDao;
 import com.dao.VehicleDaoImpl;
 import com.dto.VehicleDto;
+import com.dto.VehicleLeaseDto;
+import com.exception.CarNotFoundException;
 import com.exception.ResourceNotFoundException;
 
 public class VehicleService {
@@ -25,11 +27,12 @@ public class VehicleService {
 		return dao.deleteVehicle(id);
 	}
 
-	public int changeAvailabilityStatus(int vehicleId, int value) throws SQLException {
+	public int changeAvailabilityStatus(int vehicleId, int value) throws SQLException{
 		return dao.changeAvailabilityStatus(vehicleId, value);
 	}
 	
 	/* ----------------------------------------------------------------------------------------- */
+	
 	public int insert(Vehicle vehicle)  throws SQLException{
 		return dao.save(vehicle);
 	}
@@ -54,4 +57,34 @@ public class VehicleService {
 		return dao.getAvgDailyRate(vendorId);
 	}
 
+	// -------------------------------------------------------------------------------------------------------
+	public List<VehicleLeaseDto> getMyLeasedCars(int customer_id) throws SQLException {
+		return dao.getMyLeasedCars(customer_id);
+	}
+
+	public int returnVehicle(int returnVehicleId) throws SQLException {
+		return dao.returnVehicle(returnVehicleId);
+	}
+	// ------------------------------------------------------------------------------------------------------------
+	
+	public void updateDailyRate(int vehicleID, double daily_rate) throws SQLException, CarNotFoundException{
+		boolean isIdValid = dao.findOne(vehicleID);
+		if(!isIdValid)
+			throw new CarNotFoundException("VehicleId of the Car given is Invalid!!");
+		dao.updateDailyRate(vehicleID,daily_rate);
+		
+	}
+
+	public List<VehicleDto> getMostLeasedVehicle(int vendorId)  throws SQLException{
+		return dao.getMostLeasedVehicle(vendorId);
+	}
+
+	public Vehicle getVehicleById(int id) throws SQLException{
+		return dao.getVehicleById(id);
+	}
+
+	public int insertWithID(Vehicle newVehicle) throws SQLException{
+		return dao.insertWithID(newVehicle);
+	
+	}
 }

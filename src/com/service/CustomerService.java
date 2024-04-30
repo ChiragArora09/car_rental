@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.dao.CustomerDao;
 import com.dao.CustomerDaoImpl;
+import com.dto.CustomerDetailsDto;
 import com.model.Customer;
 
 public class CustomerService {
@@ -28,5 +29,9 @@ public class CustomerService {
 
 	public int blacklistCustomer(int id) throws SQLException {
 		return dao.blacklistCustomer(id);		
+	}
+
+	public List<CustomerDetailsDto> getDetailsForVendor(int vendorId) throws SQLException{
+		return dao.getDetailsForVendor(vendorId);
 	}
 }

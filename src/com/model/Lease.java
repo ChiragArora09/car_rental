@@ -79,6 +79,13 @@ public class Lease {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	@Override
+	public String toString() {
+		return "Lease [customer_id=" + customer_id + ", vehicle_id=" + vehicle_id + ", id=" + id + ", start_date="
+				+ start_date + ", end_date=" + end_date + ", status=" + status + ", type=" + type + "]";
+	}
+	
 	
 	
 }

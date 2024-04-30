@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.dto.VehicleDto;
+import com.exception.CarNotFoundException;
 import com.exception.ResourceNotFoundException;
 import com.model.Vehicle;
 import com.service.VehicleService;
@@ -29,9 +30,11 @@ public class VehicleController {
 			System.out.println("Press 1. Insert Vehicle");
 			System.out.println("Press 2. Delete Vehicle");
 			System.out.println("Press 3. Change vehicle availability");
-			System.out.println("Press 4. Display all Vehicles");
-			System.out.println("Press 5. Change vehicle data");
-			System.out.println("Press 6. Display average Daily Rate of my Vehicles ");
+			System.out.println("Press 4. All Vehicles");
+			System.out.println("Press 5. My Vehicles");
+			System.out.println("Press 6. Update Daily Rate");
+			System.out.println("Press 7. Average Daily Rate of my Vehicles ");
+			System.out.println("Press 8. Display most leased vehicles");
 			System.out.println("Press 0. to Exit");
 			int input = sc.nextInt();
 			if(input == 0) {
@@ -73,7 +76,16 @@ public class VehicleController {
 				
 				break;
 				
-			case 2: 
+			case 2:
+				try {
+					List<Vehicle> list = vehicleService.findAllfromVendor(vendorId);
+					for(Vehicle v : list) {
+						System.out.println(v);
+					}
+				}catch(SQLException e) {
+					System.out.println(e.getMessage());
+				}
+				
 				System.out.println("Enter Vehicle ID");
 				try {
 					vehicleService.deleteByid(sc.nextInt());
@@ -86,27 +98,30 @@ public class VehicleController {
 				break; 
 				
 			case 3: 
-//				try {
-//					//display all vehicle from the vendor 
-//					List<Vehicle> list = vehicleService.findAllfromVendor(vendorId);
-//					for(Vehicle v : list) {
-//						System.out.println(v);
-//					}
-//					System.out.println("Enter Vehicle ID");
-//					vehicleService.makeVehicleUnavailable(sc.nextInt(), vendorId);
-//					System.out.println("Vehicle made unavailable..");
-//				} catch (ResourceNotFoundException e) {
-//					System.out.println(e.getMessage());
-//				} catch (SQLException e) {
-//					System.out.println(e.getMessage());
-//				}				
+				try {
+//					display all vehicle from the vendor 
+					List<Vehicle> vendorVehicle = vehicleService.findAllfromVendor(vendorId);
+					for(Vehicle v : vendorVehicle) {
+						System.out.println(v.toString());
+					}
+					System.out.println("Enter Vehicle ID");
+					int vehicleId = sc.nextInt();
+					System.out.println("Is that vehicle available?");
+					sc.nextLine();
+					String availability = sc.nextLine();
+					int available = availability == "yes"?1:0;
+					vehicleService.changeAvailabilityStatus(vehicleId, available);
+					System.out.println("Vehicle made unavailable..");
+				}  catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}				
 				break; 
 				
 			case 4: 	 
 				try {
-					List<Vehicle> list = vehicleService.findAll();
-					for(Vehicle v : list) {
-						System.out.println(v);
+					List<Vehicle> allVehicles = vehicleService.findAll();
+					for(Vehicle v : allVehicles) {
+						System.out.println(v.toString());
 					}
 				} catch (SQLException e) {
 					System.out.println(e.getMessage());
@@ -114,11 +129,39 @@ public class VehicleController {
 				break;
 				
 			case 5:
+				try {
+					List<Vehicle> vendorVehicle = vehicleService.findAllfromVendor(vendorId);
+					for(Vehicle v : vendorVehicle) {
+						System.out.println(v.toString());
+					}
+					
+				}catch(SQLException e) {
+					System.out.println(e.getMessage());
+				}
 				
 				break;
 				
+			case 6:
+				try {
+					//display all vehicle from the vendor
+					System.out.println("My Vehicles...");
+					List<Vehicle> list = vehicleService.findAllfromVendor(vendorId);
+					for(Vehicle v : list) {
+						System.out.println(v.toString());
+					}
+					System.out.println("Enter Vehicle ID");
+					int vehicleID = sc.nextInt();
+					System.out.println("Enter new Daily Rate:");
+					vehicleService.updateDailyRate(vehicleID, sc.nextDouble());
+					System.out.println("Vehicle Daily Rate Updated...");
+				} catch (CarNotFoundException e) {
+					System.out.println(e.getMessage());
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}	
+				break;
 
-			case 6: 
+			case 7: 
 				System.out.println("Average Daily Rate of my Vehicles: ");
 				 try {
 				        VehicleDto vehicleDto = vehicleService.getAvgDailyRate(vendorId);
@@ -131,7 +174,24 @@ public class VehicleController {
 				 catch (SQLException e) {
 					System.out.println(e.getMessage());
 				}	
-				break; 
+				break;
+				
+			case 8: 
+				System.out.println("Most Leased Vehicles... ");
+				 try {
+				        List<VehicleDto> list = vehicleService.getMostLeasedVehicle(vendorId);
+				        for(VehicleDto b : list){
+				        	System.out.println("--------------------------------------------------------\n");
+				        System.out.format("%15s%35s", "Vehicle", "Number of Leasings");
+				        System.out.println("\n--------------------------------------------------------");
+				        System.out.format("%15s%25.2f\n", b.getCriteria(), b.getValue());
+				        System.out.println("--------------------------------------------------------\n");
+				        }   
+				    }
+				 catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}	
+				break;
 			}
 			
 		}

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.exception.InvalidCredentialsException;
 import com.model.User;
 import com.utility.DBConnection;
 
@@ -47,7 +48,7 @@ public class UserDaolmpl implements UserDao {
 	}	
 	
 	@Override
-	public User login(String username, String password) throws SQLException {
+	public User login(String username, String password) throws SQLException, InvalidCredentialsException {
 		Connection con = DBConnection.dbConnect();
 		String sql="select * from user where user_name=? AND password=?";
 		//prepare the statement 
@@ -56,13 +57,15 @@ public class UserDaolmpl implements UserDao {
 		pstmt.setString(2, password);
 		ResultSet rst  = pstmt.executeQuery();
 		User userObj= new User();
-		while(rst.next()) {
+		if(rst.next()) {
 			String role=rst.getString("role");
 			userObj.setRole(role);
 			int id= rst.getInt("id");
 			userObj.setId(id);
 		    String mail =rst.getString("email_address");
 		    userObj.setEmail_address(mail);
+		}else {
+			throw new InvalidCredentialsException("Invalid username or password");
 		}
 		DBConnection.dbClose();
 		return userObj;

@@ -9,6 +9,7 @@ public class CustomerHistory {
 	private String any_damage_reported;
 	private int customer_id;
 	private int vehicle_id;
+	private double finalAmount;
 	
 	public CustomerHistory() {
 		super();
@@ -26,6 +27,21 @@ public class CustomerHistory {
 		this.customer_id = customer_id;
 		this.vehicle_id = vehicle_id;
 	}
+	
+	
+	public CustomerHistory(double discount, double late_return_fee, int start_mileage, int end_mileage,
+			String any_damage_reported, int customer_id, int vehicle_id, double finalAmount) {
+		super();
+		this.discount = discount;
+		this.late_return_fee = late_return_fee;
+		this.start_mileage = start_mileage;
+		this.end_mileage = end_mileage;
+		this.any_damage_reported = any_damage_reported;
+		this.customer_id = customer_id;
+		this.vehicle_id = vehicle_id;
+		this.finalAmount = finalAmount;
+	}
+	
 	
 	public int getId() {
 		return id;
@@ -74,6 +90,12 @@ public class CustomerHistory {
 	}
 	public void setVehicle_id(int vehicle_id) {
 		this.vehicle_id = vehicle_id;
+	}
+	public double getFinalAmount() {
+		return finalAmount;
+	}
+	public void setFinalAmount(double finalAmount) {
+		this.finalAmount = finalAmount;
 	}
 	@Override
 	public String toString() {

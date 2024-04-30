@@ -6,6 +6,7 @@ import java.util.List;
 import com.dao.VendorDao;
 import com.dao.VendorDaoImpl;
 import com.dto.ParticularVendorDto;
+import com.dto.ReadyToReturnDto;
 import com.dto.VendorProfitDto;
 import com.model.Vendor;
 
@@ -36,7 +37,11 @@ public class VendorService {
 		return dao.getProfits();
 	}
 
-	public Vendor getVendor(int id) throws SQLException{
+	public Vendor getVendor(int id) throws SQLException {
 		return dao.getVendorByUserId(id);
+	}
+
+	public List<ReadyToReturnDto> getBackVehicle(int vendorId) throws SQLException {
+		return dao.getBackVehicle(vendorId);
 	}
 }

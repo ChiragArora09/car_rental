@@ -115,6 +115,15 @@ public class Vehicle {
 	public void setVendor_id(int vendor_id) {
 		this.vendor_id = vendor_id;
 	}
+
+	@Override
+	public String toString() {
+		return "Vehicle [id=" + id + ", vehicle_name=" + vehicle_name + ", vehicle_model=" + vehicle_model
+				+ ", vehicle_year=" + vehicle_year + ", daily_rate=" + daily_rate + ", availability_status="
+				+ availability_status + ", passenger_capacity=" + passenger_capacity + ", engine_capacity="
+				+ engine_capacity + ", vendor_id=" + vendor_id + "]";
+	}
+	
 	
 	
 }
