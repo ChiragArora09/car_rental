@@ -37,11 +37,32 @@ public class UserController {
 				System.out.println("Enter email address");
 				sc.nextLine();
 				String email = sc.nextLine();
-				System.out.println("Enter password");
+				System.out.println("Enter password (should contain atlease 1 alphabet, 1 number and 1 symbol, minimum 8 letters)");
 				String password = sc.nextLine();
-				if(password.length() < 8) {
-					
+				
+				// PASSWORD VALIDATION
+				boolean hasDigit = false;
+		        boolean hasLowercase = false;
+		        boolean hasUppercase = false;
+		        boolean hasSpecialSymbol = false;
+				
+		        for (char c : password.toCharArray()) {
+		            if (Character.isDigit(c)) {
+		                hasDigit = true;
+		            } else if (Character.isLowerCase(c)) {
+		                hasLowercase = true;
+		            } else if (Character.isUpperCase(c)) {
+		                hasUppercase = true;
+		            } else if (!Character.isWhitespace(c)) {
+		                hasSpecialSymbol = true;
+		            }
+		        }
+				if(password.length() < 8 || !hasDigit || !hasLowercase || !hasUppercase || !hasSpecialSymbol) {
+					System.out.println("Wrong password format...try again");
+					break;
 				}
+				// ------------------------------------------------------------------------ //
+				
 				System.out.println("Enter your role (Customer/Vendor)");
 				String role = sc.nextLine();
 				System.out.println("Enter username");
