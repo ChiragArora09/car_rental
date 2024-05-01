@@ -59,7 +59,12 @@ public class VendorDaoImpl implements VendorDao {
 	@Override
 	public ParticularVendorDto getParticularVendor(int id) throws SQLException {
 		Connection con = DBConnection.dbConnect();
-		String sql = "select vd.*, COUNT(v.vendor_id) as no_of_cars from vendor vd JOIN vehicle v ON vd.id=v.vendor_id group by v.vendor_id HAVING vd.id=?";
+//		String sql = "select vd.*, COUNT(v.vendor_id) as no_of_cars from vendor vd JOIN vehicle v ON vd.id=v.vendor_id group by v.vendor_id HAVING vd.id=?";
+		String sql = "SELECT vd.id, vd.name, vd.identity_proof, vd.phone_number, vd.commission, vd.user_id, COUNT(v.vendor_id) as no_of_cars "
+				+ "FROM vendor vd "
+				+ "JOIN vehicle v ON vd.id = v.vendor_id "
+				+ "WHERE vd.id = ? "
+				+ "GROUP BY  vd.id, vd.name, vd.identity_proof, vd.phone_number, vd.commission, vd.user_id;";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, id);
 		ResultSet rst = pstmt.executeQuery();
@@ -108,7 +113,14 @@ public class VendorDaoImpl implements VendorDao {
 	@Override
 	public List<VendorProfitDto> getProfits() throws SQLException {
 		Connection con = DBConnection.dbConnect();
-		String sql = "select vd.name, SUM(v.daily_rate)*((100-vd.commission)/100) as profit_per_day, SUM(v.daily_rate)*((100-vd.commission)/100)*30 as profit_per_month from vendor vd JOIN vehicle v ON v.vendor_id=vd.id group by v.vendor_id;";
+//		String sql = "select vd.name, SUM(v.daily_rate)*((100-vd.commission)/100) as profit_per_day, SUM(v.daily_rate)*((100-vd.commission)/100)*30 as profit_per_month from vendor vd JOIN vehicle v ON v.vendor_id=vd.id group by v.vendor_id;";
+		String sql = "SELECT vd.id, "
+				+ "       vd.name, "
+				+ "       SUM(v.daily_rate) * ((100 - vd.commission) / 100) AS profit_per_day, "
+				+ "       SUM(v.daily_rate) * ((100 - vd.commission) / 100) * 30 AS profit_per_month "
+				+ "FROM vendor vd \n"
+				+ "JOIN vehicle v ON v.vendor_id = vd.id "
+				+ "GROUP BY vd.id, vd.name, vd.commission;";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		ResultSet rst = pstmt.executeQuery();
 		List<VendorProfitDto> list = new ArrayList<>();

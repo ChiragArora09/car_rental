@@ -208,10 +208,10 @@ public class AdminController {
 				
 				try {
 					List<Vendor> vendors = vendorService.getAllVendors();
-					System.out.println("NAME   PHONE_NUMBER   IDENTITY PROOF   COMMISSION   USER_ID");
+					System.out.println("ID   NAME   PHONE_NUMBER   IDENTITY PROOF   COMMISSION   USER_ID");
 					System.out.println("-------------------------------------------------------------");
 					for(Vendor v : vendors){
-						System.out.println(v.getName() + " | " + v.getPhone_number() + " | " + v.getIdentity_proof() + " | " + v.getCommission() + " | " + v.getUser_id());
+						System.out.println(v.getId() + " | " + v.getName() + " | " + v.getPhone_number() + " | " + v.getIdentity_proof() + " | " + v.getCommission() + " | " + v.getUser_id());
 					}
 					
 					System.out.println("");
@@ -228,7 +228,7 @@ public class AdminController {
 								System.out.println("Vendor has been blocked");
 								// deleting vehicles by the deleted vendor
 								try {
-									int status1 = vehicleService.deleteVehicle(id);
+									int status1 = vehicleService.deleteVehicle(id); // soft delete
 									if(status == 1) {
 										System.out.println("The vendor's vehicle has gone unavailable");
 									}
@@ -257,10 +257,10 @@ public class AdminController {
 				System.out.println("");
 				try {
 					List<Vendor> vendors = vendorService.getAllVendors();
-					System.out.println("NAME   COMMISSION");
+					System.out.println("ID   NAME   COMMISSION");
 					System.out.println("-----------------------");
 					for(Vendor v : vendors){
-						System.out.println(v.getName() + " | " + v.getCommission());
+						System.out.println(v.getId() + " | " + v.getName() + " | " + v.getCommission());
 					}
 					System.out.println("");
 					System.out.println("Enter the VENDOR ID to edit the commission of that vendor");

@@ -144,7 +144,7 @@ public class CustomerController {
 				break;
 				
 			case 5:
-//					ReviewController.Reviews(customer_id);
+					ReviewController.Reviews(customer_id);
 				break;
 				
 			default:

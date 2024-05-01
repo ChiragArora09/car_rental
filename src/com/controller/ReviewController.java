@@ -27,7 +27,7 @@ public class ReviewController {
 		VehicleService vehicleService = new VehicleService();
 		Scanner sc = new Scanner(System.in);
 		
-		int customer_id=1; // customer_id=-1 means no user is logged in
+		int customer_id=-1; // customer_id=-1 means no user is logged in
 		String name = null;
 		
 		if(args[0] != null) {

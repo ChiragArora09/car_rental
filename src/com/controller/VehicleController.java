@@ -50,7 +50,7 @@ public class VehicleController {
 				System.out.println("Enter Vehicle Model (Year):");
 				//sc.nextLine();
 				String vehicleModel=sc.nextLine(); 
-				System.out.println("Enter Vehicle Reg. Date(yyy-mm-dd) :");
+				System.out.println("Enter Vehicle Reg. Date(yyyy-mm-dd) :");
 				String vehicleYear=sc.nextLine(); 
 				System.out.println("Enter Daily Rate");
 				float dailyRate=sc.nextFloat(); 
@@ -106,12 +106,10 @@ public class VehicleController {
 					}
 					System.out.println("Enter Vehicle ID");
 					int vehicleId = sc.nextInt();
-					System.out.println("Is that vehicle available?");
-					sc.nextLine();
-					String availability = sc.nextLine();
-					int available = availability == "yes"?1:0;
-					vehicleService.changeAvailabilityStatus(vehicleId, available);
-					System.out.println("Vehicle made unavailable..");
+					System.out.println("Enter availability status (0 - not available / 1 - available)");
+					int availability = sc.nextInt();			
+					vehicleService.changeAvailabilityStatus(vehicleId, availability);
+					System.out.println("Vehicle availability status updated");
 				}  catch (SQLException e) {
 					System.out.println(e.getMessage());
 				}				
