@@ -36,10 +36,12 @@ public class CustomerHistoryController {
 			case 1:
 				try {
 					List<CustomerHistoryDto> customerHistorylist = customerHistoryService.findAll(cust_id);
-					System.out.println("VEHICLE   AMOUNT   DISCOUNT   DAMAGED");
+					System.out.println("VEHICLE-ID   VEHICLE-NAME   AMOUNT   DISCOUNT   DAMAGED");
+					System.out.println("");
 					for(CustomerHistoryDto c:customerHistorylist) {
-						System.out.println(c.getVehicleName() + "  " + c.getFinalAmount() + "  " + c.getDiscount() + "  " + c.getDamageReported());
+						System.out.println(c.getVehicleId() + "  " + c.getVehicleName() + "  " + c.getFinalAmount() + "  " + c.getDiscount() + "  " + c.getDamageReported());
 					}
+					System.out.println("");
 				} catch (SQLException e) {
 					System.out.println(e.getMessage());
 				}
@@ -49,9 +51,11 @@ public class CustomerHistoryController {
 				try {
 					System.out.println("-------------Ongoiong Deals---------");
 					List<Lease> leaselist = customerHistoryService.GetOngoingDeals(cust_id);
+					System.out.println("VehicleID   START-DATE   END-DATE   STATUS   TYPE");
 					for(Lease l:leaselist) {
 						System.out.println(l.getVehicle_id() + "  " + l.getStart_date() + "  " + l.getEnd_date() + "  " + l.getStatus()+ "  " + l.getType());
 					}
+					System.out.println("");
 				} catch (SQLException e) {
 					System.out.println(e.getMessage());
 				}
@@ -62,10 +66,11 @@ public class CustomerHistoryController {
 				try {
 					System.out.println("-------------Upcoming/Pending Deals---------");
 					List<Lease> leaselist = customerHistoryService.GetPendingDeals(cust_id);
-					System.out.println("Start-date   End-date   Status   Type");
+					System.out.println("VehicleID   START-DATE   END-DATE   STATUS   TYPE");
 					for(Lease l:leaselist) {
 						System.out.println(l.getVehicle_id() + "  " + l.getStart_date() + "  " + l.getEnd_date() + "  " + l.getStatus()+ "  " + l.getType());
 					}
+					System.out.println("");
 					} catch (SQLException e) {
 						System.out.println(e.getMessage());
 					}

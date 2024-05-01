@@ -23,13 +23,13 @@ public class CustomerHistoryDaoImpl implements CustomerHistoryDao{
 		ResultSet rst = pstmt.executeQuery();
 		List<CustomerHistoryDto> list = new ArrayList<>();
 		while(rst.next()) {
-//			vehicle_name      | final_amount | discount | any_damage_reported |
+			int vehicleId = rst.getInt("v.id");
 			String vehicleName = rst.getString("vehicle_name");
 			Double finalAmount = rst.getDouble("final_amount");
 			Double discount = rst.getDouble("discount");
 			String damageReported = rst.getString("any_damage_reported");
 			
-			CustomerHistoryDto hist = new CustomerHistoryDto(vehicleName, finalAmount, discount, damageReported);
+			CustomerHistoryDto hist = new CustomerHistoryDto(vehicleId, vehicleName, finalAmount, discount, damageReported);
 			list.add(hist);
 		}
 		DBConnection.dbClose();

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.dto.ParticularVendorDto;
 import com.dto.ReadyToReturnDto;
+import com.dto.VehicleReviewCustomerDto;
 import com.dto.VendorProfitDto;
 import com.model.Vendor;
 
@@ -18,5 +19,6 @@ public interface VendorDao {
 	List<VendorProfitDto> getProfits() throws SQLException;
 	Vendor getVendorByUserId(int id) throws SQLException;
 	List<ReadyToReturnDto> getBackVehicle(int vendorId) throws SQLException;
+	List<VehicleReviewCustomerDto> getReviewsOnVehicles(int vendorId) throws SQLException;
 
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.dto.ParticularVendorDto;
 import com.dto.ReadyToReturnDto;
+import com.dto.VehicleReviewCustomerDto;
 import com.dto.VendorProfitDto;
 import com.model.Vendor;
 import com.utility.DBConnection;
@@ -165,6 +166,28 @@ public class VendorDaoImpl implements VendorDao {
 			
 			ReadyToReturnDto details = new ReadyToReturnDto(dealId, customerId, customerName, phoneNumber, vehicleName, vehicleId, lastDate);
 			list.add(details);
+		}
+		DBConnection.dbClose();
+		return list;
+	}
+
+	@Override
+	public List<VehicleReviewCustomerDto> getReviewsOnVehicles(int vendorId) throws SQLException {
+		Connection con = DBConnection.dbConnect();
+		String sql = "select v.vehicle_name, r.description, r.ratings, CONCAT(c.first_name,\" \",c.last_name) as customer from review r JOIN vehicle v ON v.id=r.vehicle_id JOIN customer c ON c.id=r.customer_id WHERE v.vendor_id=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, vendorId);
+		ResultSet rst = pstmt.executeQuery();
+		
+		List<VehicleReviewCustomerDto> list = new ArrayList<>();
+		while(rst.next()) {
+			String vehicleName = rst.getString("vehicle_name");
+			String description = rst.getString("description");
+			String customer = rst.getString("customer");
+			int ratings = rst.getInt("ratings");
+			
+			VehicleReviewCustomerDto review = new VehicleReviewCustomerDto(vehicleName, customer, description, ratings);
+			list.add(review);
 		}
 		DBConnection.dbClose();
 		return list;

@@ -48,7 +48,8 @@ public class CustomerController {
 			System.out.println("Press 1. All Cars");
 			System.out.println("Press 2. Book Car");
 			System.out.println("Press 3. My Deals");
-			System.out.println("Press 4. Return vehicle");			
+			System.out.println("Press 4. Return vehicle");
+			System.out.println("Press 5. Reviews");
 			System.out.println("Press 0. to Exit");
 			
 			int input = sc.nextInt(); // INPUT FROM USER
@@ -140,6 +141,10 @@ public class CustomerController {
 					System.out.println(e.getMessage());
 				}
 				
+				break;
+				
+			case 5:
+//					ReviewController.Reviews(customer_id);
 				break;
 				
 			default:

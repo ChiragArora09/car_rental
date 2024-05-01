@@ -7,6 +7,7 @@ import java.util.Scanner;
 import com.dto.CustomerDetailsDto;
 import com.dto.CustomerLeaseDto;
 import com.dto.ReadyToReturnDto;
+import com.dto.VehicleReviewCustomerDto;
 import com.model.CustomerHistory;
 import com.model.Vendor;
 import com.service.CustomerHistoryService;
@@ -170,6 +171,16 @@ public class VendorController {
 				break;
 			
 			case 5:
+				try {
+					List <VehicleReviewCustomerDto> list = vendorService.getReviewsOnVehicles(vendorId);
+					
+					System.out.println("VEHICLE   DESCRIPTION   RATINGS   CUSTOMER");
+					for(VehicleReviewCustomerDto review : list) {
+						System.out.println(review.getVehicleName() + "  " + review.getDescription() + "  " + review.getRatings() + "  " + review.getCustomer());
+					}
+				}catch(SQLException e) {
+					System.out.println(e.getMessage());
+				}
 				
 				break;
 				
