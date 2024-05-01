@@ -39,6 +39,9 @@ public class UserController {
 				String email = sc.nextLine();
 				System.out.println("Enter password");
 				String password = sc.nextLine();
+				if(password.length() < 8) {
+					
+				}
 				System.out.println("Enter your role (Customer/Vendor)");
 				String role = sc.nextLine();
 				System.out.println("Enter username");

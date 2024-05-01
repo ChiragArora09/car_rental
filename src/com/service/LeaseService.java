@@ -8,12 +8,13 @@ import com.dao.LeaseDao;
 import com.dao.LeaseDaoImpl;
 import com.dto.BookingDto;
 import com.dto.CustomerLeaseDto;
+import com.exception.CarNotFoundException;
 
 public class LeaseService {
 	
 	LeaseDao dao = new LeaseDaoImpl();
 	
-	public int bookVehicle(Lease lease) throws SQLException {
+	public int bookVehicle(Lease lease) throws SQLException, CarNotFoundException {
 		return dao.insertIntoLease(lease);
 	}
 	

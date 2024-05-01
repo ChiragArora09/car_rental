@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.dto.VehicleLeaseDto;
+import com.exception.CarNotFoundException;
 import com.model.Customer;
 import com.model.Lease;
 import com.model.Vehicle;
@@ -105,7 +106,9 @@ public class CustomerController {
 				    	}
 				    }catch(SQLException e) {
 				    	System.out.println(e.getMessage());
-				    }
+				    }catch(CarNotFoundException e) {
+						System.out.println(e.getMessage());
+					}
 					
 				}catch(SQLException e) {
 					System.out.println(e.getMessage());

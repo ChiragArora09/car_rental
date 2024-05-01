@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.dto.CustomerHistoryDto;
+import com.dto.DamageReportDto;
+import com.exception.NewCustomerException;
+import com.exception.ResourceNotFoundException;
 import com.model.CustomerHistory;
 import com.model.Lease;
 import com.service.CustomerHistoryService;
@@ -26,6 +29,8 @@ public class CustomerHistoryController {
 			System.out.println("Press 1: View Completed Deals");
 			System.out.println("Press 2: View Ongoing Deals");
 			System.out.println("Press 3: View Upcoming Deals");
+			System.out.println("Press 4: Customers who have reported damage");
+			System.out.println("Press 5: Total milage used by customer in his previous deals");
 			System.out.println("Press 0:Exit");
 			int input = sc.nextInt();
 			if (input == 0) {
@@ -72,6 +77,42 @@ public class CustomerHistoryController {
 					}
 					System.out.println("");
 					} catch (SQLException e) {
+						System.out.println(e.getMessage());
+					}
+					break;
+					
+			case 4:
+				//list customers history who have reported damage to vehicle
+				try {
+					List<DamageReportDto> list = customerHistoryService.GetCustomerReport();
+					System.out.println(
+							"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+					System.out.format("%40s%40s%40s", "FirstName", "LastName", "ReportedDamage");
+					System.out.println(
+							"\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+					for (DamageReportDto c : list) {
+						System.out.format("%40s%40s%40s", c.getFirstName(), c.getLastName(), c.getAnyDamageReported());
+						System.out.print("\n");
+					}
+					System.out.println(
+							"-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+				
+			case 5:
+
+				try {
+					CustomerHistory customerHistory = new CustomerHistory();
+					int totalmileage = customerHistoryService.GetTotalmileageById(cust_id);
+					System.out.println("Totalmileage used by you in previous deals"+":"+ totalmileage);
+					} catch (SQLException e) {
+						System.out.println(e.getMessage());
+					} catch (ResourceNotFoundException e) {
+						System.out.println(e.getMessage());
+					}
+					catch (NewCustomerException e) {
 						System.out.println(e.getMessage());
 					}
 					break;

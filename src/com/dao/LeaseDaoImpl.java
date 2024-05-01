@@ -9,13 +9,14 @@ import java.util.List;
 
 import com.dto.BookingDto;
 import com.dto.CustomerLeaseDto;
+import com.exception.CarNotFoundException;
 import com.model.Lease;
 import com.utility.DBConnection;
 
 public class LeaseDaoImpl implements LeaseDao{
 
 	@Override
-	public int insertIntoLease(Lease lease) throws SQLException {
+	public int insertIntoLease(Lease lease) throws SQLException, CarNotFoundException {
 		Connection con = DBConnection.dbConnect();
 		String sql = "INSERT INTO lease(customer_id, vehicle_id, start_date, last_date, status, type) VALUES(?,?,?,?,?,?)";
 		PreparedStatement pstmt = con.prepareStatement(sql);
@@ -27,6 +28,10 @@ public class LeaseDaoImpl implements LeaseDao{
 		pstmt.setString(6, lease.getType());
 		
 		int status = pstmt.executeUpdate();
+		
+		if(status == 0) {
+			throw new SQLException("Invalid details, please try again");
+		}
 	
 		DBConnection.dbClose();		
 		return status;

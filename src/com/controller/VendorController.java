@@ -8,6 +8,7 @@ import com.dto.CustomerDetailsDto;
 import com.dto.CustomerLeaseDto;
 import com.dto.ReadyToReturnDto;
 import com.dto.VehicleReviewCustomerDto;
+import com.exception.WrongInformationException;
 import com.model.CustomerHistory;
 import com.model.Vendor;
 import com.service.CustomerHistoryService;
@@ -151,17 +152,20 @@ public class VendorController {
 						String damaged = sc.nextLine();
 						CustomerHistory customerHistory = new CustomerHistory(discount, lateReturnFees, startMileage, currentMileage, damaged, customerId, vehicleId, finalAmount);
 						
-						int status = customerHistoryService.insertIntoHistory(customerHistory); // SET THE STATUS OF THE LEASE TO BE COMPLETED
-						if(status==1) {
-							int leaseCompleted = leaseService.leaseCompleted(dealId);
-							if(leaseCompleted == 1) {
-								int vehicleAvailable = vehicleService.changeAvailabilityStatus(vehicleId, 1);
-								if(vehicleAvailable == 1) {
-									System.out.println("DEAL COMPLETED");
+						try {
+							int status = customerHistoryService.insertIntoHistory(customerHistory); // SET THE STATUS OF THE LEASE TO BE COMPLETED
+							if(status==1) {
+								int leaseCompleted = leaseService.leaseCompleted(dealId);
+								if(leaseCompleted == 1) {
+									int vehicleAvailable = vehicleService.changeAvailabilityStatus(vehicleId, 1);
+									if(vehicleAvailable == 1) {
+										System.out.println("DEAL COMPLETED");
+									}
 								}
 							}
-						}
-						
+						}catch(WrongInformationException e) {
+							System.out.println(e.getMessage());
+						}	
 					}					
 					
 				}catch(SQLException e) {
