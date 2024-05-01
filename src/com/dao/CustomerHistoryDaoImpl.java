@@ -17,7 +17,7 @@ public class CustomerHistoryDaoImpl implements CustomerHistoryDao{
 	@Override
 	public List<CustomerHistoryDto> findAll(int id) throws SQLException {
 		Connection con = DBConnection.dbConnect();
-		String sql="select v.id, v.vehicle_name, c.final_amount, c.discount, any_damage_reported from customer_history c JOIN vehicle v ON v.id=c.vehicle_id WHERE c.id=?";
+		String sql="select v.id, v.vehicle_name, c.final_amount, c.discount, any_damage_reported from customer_history c JOIN vehicle v ON v.id=c.vehicle_id WHERE c.customer_id=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1,id);
 		ResultSet rst = pstmt.executeQuery();
