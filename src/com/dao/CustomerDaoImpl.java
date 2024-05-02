@@ -36,8 +36,8 @@ public class CustomerDaoImpl implements CustomerDao{
 	public Customer getCustomer(int id) throws SQLException {
 		Connection con = DBConnection.dbConnect();
 		String sql = "SELECT * from customer WHERE user_id=?";
-		pstmt.setInt(1, id);
 		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, id);
 		ResultSet rst = pstmt.executeQuery();
 		
 		Customer c1 = new Customer();
@@ -83,8 +83,9 @@ public class CustomerDaoImpl implements CustomerDao{
 	@Override
 	public Customer particularCustomer(int id) throws SQLException {
 		Connection con = DBConnection.dbConnect();
-		String sql = "SELECT * from customer WHERE id="+id;
+		String sql = "SELECT * from customer WHERE id=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, id);
 		ResultSet rst = pstmt.executeQuery();
 		
 		Customer c1 = new Customer();
