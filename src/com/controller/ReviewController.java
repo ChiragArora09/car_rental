@@ -113,18 +113,13 @@ public class ReviewController {
 					// displaying all the reviews provided by customer for vehicles
 					System.out.println("------------Displaying All Reviews------------");
 					List<VehicleReviewDto> reviewlist = reviewService.findAll();
-					System.out.println(
-							"---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-					System.out.format("%30s%40s%50s%50s%40s", "Review Id", "CustomerId(WhoGaveReview)",
-							"VehicleId(WhichReceivedReview)", "Description", "Ratings Of Vehicle");
-					System.out.println(
-							"\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-					for (VehicleReviewDto r : reviewlist) {
-						System.out.format("%30s%40s%50s%50s%40s", r.getVehicle_name(), r.getDescription(), r.getRatings());
-						System.out.println("\n");
+					
+					System.out.println("VEHICLE  -  DESCRIPTION  -  RATINGS");
+					
+					for(VehicleReviewDto v : reviewlist) {
+						System.out.println(v.getVehicle_name() + "  " + v.getDescription() + "  " + v.getRatings());
 					}
-					System.out.println(
-							"---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
 				} catch (SQLException e) {
 					System.out.println(e.getMessage());
 
