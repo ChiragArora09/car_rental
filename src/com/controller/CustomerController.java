@@ -65,6 +65,12 @@ public class CustomerController {
 			case 1:
 				try {
 					List<Vehicle> vehicles = vehicleService.getAllCars();
+					
+					if(vehicles.size() == 0) {
+						System.out.println("No vehicles available");
+						break;
+					}
+					
 					System.out.println("VEHICLE_NAME  VEHICLE_MODEL  DAILY_RATE  PASSENGER_CAPACITY  ENGINE_CAPACITY  AVAILABILITY_STATUS");
 					for(Vehicle v : vehicles){
 						System.out.println(v.getVehicle_name() + " | " + v.getVehicle_model() + " | " + v.getDaily_rate() + " | " + v.getPassenger_capacity() + " | " + v.getEngine_capacity() + " | " + v.getAvailability_status());
@@ -78,6 +84,12 @@ public class CustomerController {
 				try {
 					System.out.println("+++++++++++++++++++++++++++++ BOOKING VEHICLE +++++++++++++++++++++++++++++++++");
 					List<Vehicle> vehicles = vehicleService.getAvailableCars(); // calling the function
+					
+					if(vehicles.size() == 0) {
+						System.out.println("No vehicles available");
+						break;
+					}
+					
 					System.out.println("ID  VEHICLE_NAME  VEHICLE_MODEL  DAILY_RATE  PASSENGER_CAPACITY  ENGINE_CAPACITY");
 					for(Vehicle v : vehicles){
 						System.out.println(v.getId() + " | " + v.getVehicle_name() + " | " + v.getVehicle_model() + " | " + v.getDaily_rate() + " | " + v.getPassenger_capacity() + " | " + v.getEngine_capacity());

@@ -73,6 +73,7 @@ public class VendorController {
 			case 2:
 				try {
 					List<CustomerLeaseDto> list = leaseService.getMyUpcomingDeals(vendorId);
+					
 					System.out.println("CUSTOMER   DATE   VEHICLE   VEHICLE-ID   DEAL-ID");
 					for(CustomerLeaseDto cust : list) {
 						System.out.println(cust.getCustomerName() + "  " + cust.getDealDate() + "  " + cust.getVehicleName() + "  " + cust.getVehicleId() + "  " + cust.getDealId());

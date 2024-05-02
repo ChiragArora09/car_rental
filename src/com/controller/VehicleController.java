@@ -79,6 +79,12 @@ public class VehicleController {
 			case 2:
 				try {
 					List<Vehicle> list = vehicleService.findAllfromVendor(vendorId);
+					
+					if(list.size() == 0) {
+						System.out.println("No data");
+						break;
+					}
+					
 					for(Vehicle v : list) {
 						System.out.println(v);
 					}
@@ -101,6 +107,12 @@ public class VehicleController {
 				try {
 //					display all vehicle from the vendor 
 					List<Vehicle> vendorVehicle = vehicleService.findAllfromVendor(vendorId);
+					
+					if(vendorVehicle.size() == 0) {
+						System.out.println("No data");
+						break;
+					}
+					
 					for(Vehicle v : vendorVehicle) {
 						System.out.println(v.toString());
 					}
@@ -118,6 +130,12 @@ public class VehicleController {
 			case 4: 	 
 				try {
 					List<Vehicle> allVehicles = vehicleService.findAll();
+					
+					if(allVehicles.size() == 0) {
+						System.out.println("No data");
+						break;
+					}
+					
 					for(Vehicle v : allVehicles) {
 						System.out.println(v.toString());
 					}
@@ -144,6 +162,12 @@ public class VehicleController {
 					//display all vehicle from the vendor
 					System.out.println("My Vehicles...");
 					List<Vehicle> list = vehicleService.findAllfromVendor(vendorId);
+					
+					if(list.size() == 0) {
+						System.out.println("No data");
+						break;
+					}
+					
 					for(Vehicle v : list) {
 						System.out.println(v.toString());
 					}
@@ -178,6 +202,12 @@ public class VehicleController {
 				System.out.println("Most Leased Vehicles... ");
 				 try {
 				        List<VehicleDto> list = vehicleService.getMostLeasedVehicle(vendorId);
+				        
+				        if(list.size() == 0) {
+							System.out.println("No data");
+							break;
+						}
+				        
 				        for(VehicleDto b : list){
 				        	System.out.println("--------------------------------------------------------\n");
 				        System.out.format("%15s%35s", "Vehicle", "Number of Leasings");

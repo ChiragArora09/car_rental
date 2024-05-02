@@ -41,6 +41,12 @@ public class CustomerHistoryController {
 			case 1:
 				try {
 					List<CustomerHistoryDto> customerHistorylist = customerHistoryService.findAll(cust_id);
+					
+					if(customerHistorylist.size() == 0) {
+						System.out.println("No data");
+						break;
+					}
+					
 					System.out.println("VEHICLE-ID   VEHICLE-NAME   AMOUNT   DISCOUNT   DAMAGED");
 					System.out.println("");
 					for(CustomerHistoryDto c:customerHistorylist) {
@@ -56,6 +62,12 @@ public class CustomerHistoryController {
 				try {
 					System.out.println("-------------Ongoiong Deals---------");
 					List<Lease> leaselist = customerHistoryService.GetOngoingDeals(cust_id);
+					
+					if(leaselist.size() == 0) {
+						System.out.println("No data");
+						break;
+					}
+					
 					System.out.println("VehicleID   START-DATE   END-DATE   STATUS   TYPE");
 					for(Lease l:leaselist) {
 						System.out.println(l.getVehicle_id() + "  " + l.getStart_date() + "  " + l.getEnd_date() + "  " + l.getStatus()+ "  " + l.getType());
@@ -71,6 +83,12 @@ public class CustomerHistoryController {
 				try {
 					System.out.println("-------------Upcoming/Pending Deals---------");
 					List<Lease> leaselist = customerHistoryService.GetPendingDeals(cust_id);
+					
+					if(leaselist.size() == 0) {
+						System.out.println("No data");
+						break;
+					}
+					
 					System.out.println("VehicleID   START-DATE   END-DATE   STATUS   TYPE");
 					for(Lease l:leaselist) {
 						System.out.println(l.getVehicle_id() + "  " + l.getStart_date() + "  " + l.getEnd_date() + "  " + l.getStatus()+ "  " + l.getType());
