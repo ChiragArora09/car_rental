@@ -35,7 +35,8 @@ public class CustomerDaoImpl implements CustomerDao{
 	@Override
 	public Customer getCustomer(int id) throws SQLException {
 		Connection con = DBConnection.dbConnect();
-		String sql = "SELECT * from customer WHERE user_id="+id;
+		String sql = "SELECT * from customer WHERE user_id=?";
+		pstmt.setInt(1, id);
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		ResultSet rst = pstmt.executeQuery();
 		
